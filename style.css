@@ -1,0 +1,53 @@
+#submit_form
+{
+    bottom: 0;
+    background-color: #4c2161;
+    border-style: solid;
+    border-width: 1px;
+    font-family: sans-serif;
+    height: 450px;
+    left: 0;
+    margin: auto;
+    padding: 10px;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 500px;
+}
+
+#submit_form h1
+{
+    color: white;
+    font-size: 24pt;
+}
+
+#submit_form label
+{
+    color: white;
+    font-size: 14pt;
+}
+
+#submit_form textarea
+{
+    resize: none;
+}
+
+#submit_form button
+{
+    background-color: #bc0a7e;
+    height: 50px;
+    width: 100px;
+}
+
+#submit_form .input
+{
+    border-color: black;
+    border-style: solid;
+    border-width: 1px;
+    font-size: 12pt;
+}
+
+#submit_form .input_box
+{
+    width: 490px;
+}
