@@ -1,92 +1,77 @@
 
-// Array to store student data
 const students = [];
 
-// Function to save form data
-function saveData() {
-    const name = document.getElementById('name').value;
-    const city = document.getElementById('city').value;
-    const email = document.getElementById('email').value;
-    const level = document.getElementById('level').value;
+document.addEventListener("DOMContentLoaded", function () {
+    const saveButton = document.getElementById('saveButton');
+    const resetButton = document.getElementById('resetButton');
 
-    const student = {
-        name: name,
-        city: city,
-        email: email,
-        level: level
-    };
+    // Function to save form data
+    function saveData(event) {
+        event.preventDefault(); // Prevent form submission
 
-    students.push(student);
-    console.log('Student data saved:', student);
-    console.log('All students:', students);
-}
+        // Get form values
+        const id = document.getElementById('id').value;
+        const name = document.getElementById('name').value;
+        const city = document.getElementById('city').value;
+        const email = document.getElementById('email').value;
+        const level = document.getElementById('level').value;
 
-// Add event listener to the save button
-document.getElementById('saveButton').addEventListener('click', saveData);
-
-// create json
-const studentJSON = JSON.stringify(students);
-console.log('Student JSON:', studentJSON);
-
-// save the data with ajex
-
-const http=new XMLHttpRequest ();
-http.onreadystatechange =() => {
-    //CHECK STATE
-    if(http.readyState===4 ){
-        if(http.status==200){
-            var jsonTypeResponse = JSON.parse(http.responseText);
-            console.log("Student saved successfully: ", jsonTypeResponse);
-        }else{
-            console.error("Error saving student");
-            console.error("status code: " , http.status);
-            console.error("readyState: " , http.readyState);
+        // Validate input (optional but recommended)
+        if (!id || !name || !city || !email || !level) {
+            alert("All fields are required!");
+            return;
         }
-    }else{
-        console.log("processing state: " , http.readyState);
-        return;
+
+        // Create a student object
+        const student = {
+            id: id,
+            name: name,
+            city: city,
+            email: email,
+            level: level
+        };
+
+        // Save student data in the array
+        students.push(student);
+        console.log('Student data saved:', student);
+        console.log('All students:', students);
+
+        // Convert the students array to JSON
+        const studentJSON = JSON.stringify(students);
+        console.log('Student JSON:', studentJSON);
+
+        // Send the data using AJAX
+        const http = new XMLHttpRequest();
+        http.onreadystatechange = function () {
+            if (http.readyState === 4) {
+                if (http.status === 200) {
+                    const jsonResponse = JSON.parse(http.responseText);
+                    console.log("Student saved successfully: ", jsonResponse);
+                    alert("Student data saved successfully!");
+                } else {
+                    console.error("Error saving student");
+                    console.error("Status code: ", http.status);
+                    alert("Failed to save student data!");
+                }
+            }
+        };
+
+        http.open("POST", "http://localhost:8080/NewStudent/student", true);
+        http.setRequestHeader('Content-Type', 'application/json');
+        http.send(studentJSON);
     }
-}
-http.open("POST","http://localhost:8080/newStudent/student",true);
-http.setRequestHeader('Content-Type', 'application/json');
-http.send(studentJSON);
 
+    // Function to reset form data
+    function resetForm() {
+        document.getElementById('id').value = '';
+        document.getElementById('name').value = '';
+        document.getElementById('city').value = '';
+        document.getElementById('email').value = '';
+        document.getElementById('level').value = '';
+        console.log('Form reset');
+    }
 
-
-
-
-/*
-// Array to store student data
-const students = [];
-
-// Function to save form data
-function saveData() {
-    const name = document.getElementById('name').value;
-    const city = document.getElementById('city').value;
-    const email = document.getElementById('email').value;
-    const level = document.getElementById('level').value;
-
-    const student = {
-        name: name,
-        city: city,
-        email: email,
-        level: level
-    };
-
-    students.push(student);
-    console.log('Student data saved:', student);
-    console.log('All students:', students);
-}
-
-// Add event listener to the save button
-document.getElementById('saveButton').addEventListener('click', saveData);
-
-const studentJson=JSON.stringify(students);
-console.log(studentJson)
-
-//save the data with AJAX
-   const http=new XMLHttpRequest();
-http.onreadystatechange=()=>{
-    // check state
-
-}*/
+    // Add event listeners
+    saveButton.addEventListener('click', saveData);
+    resetButton.addEventListener('click', resetForm);
+});
