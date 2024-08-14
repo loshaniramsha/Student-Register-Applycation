@@ -57,6 +57,7 @@ document.addEventListener("DOMContentLoaded", function () {
         };
 
         http.open("POST", "http://localhost:8080/NewStudent/student", true);
+       /* http.open("POST", "http://localhost:8080/NewStudent_JNDI_war_exploded", true);*/
         http.setRequestHeader('Content-Type', 'application/json');
         http.send(studentJSON);
     }
